@@ -35,14 +35,14 @@
 > JSON web tokens are an open industry standard (RFC 7519) method for  representing claims securely between parties. - jwt.io
 
 +++
+## JWT: Use Cases
 
-__Use cases:__
-1. Authentication: User logs in once and gets a token for subsequent requests. Services can be stateless (no sessions). Most common use case.
+__Authentication:__ User logs in once and gets a token for subsequent requests. Services can be stateless (no sessions). Most common use case.
 
 +++
+## JWT: Use Cases
 
-__Use cases:__
-2. Information Exchange: Parties can use public/private key pairs to sign tokens. Provides message authenticity (confirm sender identity) and message integrity (message has not been tampered with).
+__Information Exchange:__ Parties can use public/private key pairs to sign tokens. Provides message authenticity (confirm sender identity) and message integrity (message has not been tampered with).
 
 ---
 
