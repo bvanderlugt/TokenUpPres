@@ -51,7 +51,7 @@ Header:
   "typ": "JWT"
 }
 ```
-
++++
 Payload (claims):
 ```
 {
@@ -59,11 +59,16 @@ Payload (claims):
   "admin": true
 }
 ```
-
++++
 Signature:
 ```
 HMACSHA256(
   base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
+```
++++
+Token:
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
 
 ---
