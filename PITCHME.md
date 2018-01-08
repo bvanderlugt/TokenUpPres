@@ -1,108 +1,111 @@
-# Aqua
+# TokenUp: JWT as a Service
 
-### A GitPitch Presentation Template
-
----
-
-## Tips!
-
-<br>
-
-@fa[arrows gp-tip](Press F to go Fullscreen)
-
-@fa[microphone gp-tip](Press S for Speaker Notes)
+### Super Chill Tokens
 
 ---
 
-## Template Features
+## Agenda
 
-- Code Presenting |
-- Repo Source, Static Blocks, GIST |
-- Custom CSS Styling |
-- Slideshow Background Image |
-- Slide-specific Background Images |
-- Custom Logo, TOC, and Footnotes |
+- Intro to JSON Web Tokens
 
----?code=src/go/server.go&lang=golang&title=Golang File
+- Security cryptography refresh
 
-@[1,3-6](Present code found within any repo source file.)
-@[8-18](Without ever leaving your slideshow.)
-@[19-28](Using GitPitch code-presenting with (optional) annotations.)
+- Overview of cloudHSM and why we used KMS.
+
+- TokenUp architecture
+
+- Lessons learned
 
 ---
 
-@title[JavaScript Block]
+## Motivation
 
-<p><span class="slide-title">JavaScript Block</span></p>
+- Impinj ramp up
 
-```javascript
-// Include http module.
-var http = require("http");
+- Practical security experience
 
-// Create the server. Function passed as parameter
-// is called on every request made.
-http.createServer(function (request, response) {
-  // Attach listener on end event.  This event is
-  // called when client sent, awaiting response.
-  request.on("end", function () {
-    // Write headers to the response.
-    // HTTP 200 status, Content-Type text/plain.
-    response.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    // Send data and end response.
-    response.end('Hello HTTP!');
-  });
+- Flexing infrastructure muscle
 
-// Listen on the 8080 port.
-}).listen(8080);
+<!-- ---?code=src/go/server.go&lang=golang&title=Golang File -->
+
+---
+
+## JWT (“jot”)
+
+> JSON web tokens are an open industry standard (RFC 7519) method for  representing claims securely between parties. - jwt.io
+
+#### Two use cases:
+
+1. Authentication: User logs in once and gets a token for subsequent requests. Services can be stateless (no sessions). Most common use case.
+
+2. Information Exchange: Parties can use public/private key pairs to sign tokens. Provides message authenticity (confirm sender identity) and message integrity (message has not been tampered with).
+
+---
+
+## JWT example
+
+Header:
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
 ```
 
-@[1,2](You can present code inlined within your slide markdown too.)
-@[9-17](Displayed using code-syntax highlighting just like your IDE.)
-@[19-20](Again, all of this without ever leaving your slideshow.)
+Payload (claims):
+```
+{
+  "username": "God",
+  "admin": true
+}
+```
 
----?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
-
-@[23](You can even present code found within any GitHub GIST.)
-@[41-53](GIST source code is beautifully rendered on any slide.)
-@[57-62](And code-presenting works seamlessly for GIST too, both online and offline.)
-
----
-
-## Template Help
-
-- [Code Presenting](https://github.com/gitpitch/gitpitch/wiki/Code-Presenting)
-  + [Repo Source](https://github.com/gitpitch/gitpitch/wiki/Code-Delimiter-Slides), [Static Blocks](https://github.com/gitpitch/gitpitch/wiki/Code-Slides), [GIST](https://github.com/gitpitch/gitpitch/wiki/GIST-Slides) 
-- [Custom CSS Styling](https://github.com/gitpitch/gitpitch/wiki/Slideshow-Custom-CSS)
-- [Slideshow Background Image](https://github.com/gitpitch/gitpitch/wiki/Background-Setting)
-- [Slide-specific Background Images](https://github.com/gitpitch/gitpitch/wiki/Image-Slides#background)
-- [Custom Logo](https://github.com/gitpitch/gitpitch/wiki/Logo-Setting), [TOC](https://github.com/gitpitch/gitpitch/wiki/Table-of-Contents), and [Footnotes](https://github.com/gitpitch/gitpitch/wiki/Footnote-Setting)
+Signature:
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
+```
 
 ---
 
-### Template Versions
+### Security Overview
 
-- #### [Base Template  @fa[external-link gp-download]](https://gitpitch.com/gitpitch/templates/aqua)
-- #### [Code Maximized @fa[external-link gp-download]](https://gitpitch.com/gitpitch/templates/aqua?p=codemax)
-- #### [Speaker Notes @fa[external-link gp-download]](https://gitpitch.com/gitpitch/templates/aqua?p=speaker)
+<!-- TODO -->
+- Encryption
+  - Implementations (ssl)
+  - RSA public/private keys
+
+- Message authenticity and verification
+  - hash functions vs. checksums, MAC/HMAC, keys
 
 ---
 
-### Questions?
+### cloudHSM overview
 
-<br>
+- Cloud-based hardware security module (HSM)
 
-@fa[twitter gp-contact](@gitpitch)
 
-@fa[github gp-contact](gitpitch)
+#### Pros:
+- Secure hardware, destroys keys if tampered with. :bomb: :key:
+- __Does__ support key export :white_check_mark:
+- Supports SSL encryption offload via openssl dynamic engine
+- Supports RSA pub/priv keys
 
-@fa[medium gp-contact](@gitpitch)
+#### Cons:
+- Not easy to use
+  - No web interface (so no sdk integration)
+  - lots of manual command line work
+  - no automation for setup
+- Still Expensive (~ $30/day)
 
----?image=assets/image/gitpitch-audience.jpg
+...so we used KMS instead
 
-@title[Download this Template!]
+#### Pros:
+- Easy to use (web api + sdk support)
+- Cheap as chips
 
-### <span class="white">Get your presentation started!</span>
-### [Download this template @fa[external-link gp-download]](https://gitpitch.com/template/download/aqua)
+#### Cons:
+- Only supports symmetric keys :sweat:
+- __Does not__ support key export :x:
 
+---
