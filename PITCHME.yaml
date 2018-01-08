@@ -6,8 +6,6 @@
 #
 theme : beige
 theme-override : assets/css/PITCHME.css
-highlight : hybrid
-logo : assets/image/logo.png
 transition : none
 published : true
 footnote : "TokenUp"
