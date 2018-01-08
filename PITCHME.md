@@ -85,6 +85,7 @@ HMACSHA256(
 - Cloud-based hardware security module (HSM)
 
 __Pros:__
+
 - Secure hardware, destroys keys if tampered with. :bomb: :key:
 - __Does__ support key export :white_check_mark:
 - Supports SSL encryption offload via openssl dynamic engine
@@ -94,18 +95,20 @@ __Pros:__
 ### cloudHSM overview
 
 __Cons__:
+
 - Not easy to use
   - No web interface (so no sdk integration)
   - lots of manual command line work
   - no automation for setup
 - Still Expensive (~ $30/day)
 
-...so we used KMS instead
+___...so we used KMS instead___
 
 +++
 ### KMS (AWS Key Management Service)
 
 __Pros__
+
 - Easy to use (web api + sdk support)
 - Cheap as chips
 
@@ -113,5 +116,6 @@ __Pros__
 ### KMS (AWS Key Management Service)
 
 __Cons:__
+
 - Only supports symmetric keys :sweat:
 - __Does not__ support key export :x:
