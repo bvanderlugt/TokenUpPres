@@ -84,28 +84,46 @@ HMACSHA256(
 
 - Cloud-based hardware security module (HSM)
 
-
-#### Pros:
-- Secure hardware, destroys keys if tampered with. :bomb: :key:
-- __Does__ support key export :white_check_mark:
-- Supports SSL encryption offload via openssl dynamic engine
-- Supports RSA pub/priv keys
-
-#### Cons:
-- Not easy to use
-  - No web interface (so no sdk integration)
-  - lots of manual command line work
-  - no automation for setup
-- Still Expensive (~ $30/day)
+<div class="left">
+    <p>Pros</p>
+    <ul>
+        <li>Secure hardware, destroys keys if tampered with.</li>
+        <li>Does support key export </li>
+        <li>Supports SSL encryption offload via openssl dynamic engine</li>
+        <li>Supports RSA pub/priv keys</li>
+    </ul>
+</div>
+<div class="right">
+    <p>Cons</p>
+    <ul>
+        <li>Not easy to use</li>
+          <ul>
+            <li>No web interface (so no sdk integration)</li>
+            <li>lots of manual command line work</li>
+            <li>no automation for provisioning</li>
+          </ul>
+        <li>Still Expensive (~ $30/day)</li>
+    </ul>
+</div>
 
 ...so we used KMS instead
 
-#### Pros:
-- Easy to use (web api + sdk support)
-- Cheap as chips
+___
 
-#### Cons:
-- Only supports symmetric keys :sweat:
-- __Does not__ support key export :x:
+### KMS (AWS Key Management Service)
 
+<div class="left">
+    <p>Pros</p>
+    <ul>
+        <li>Easy to use (web api + sdk support).</li>
+        <li>Cheap as chips</li>
+    </ul>
+</div>
+<div class="right">
+    <p>Cons</p>
+    <ul>
+        <li>Only supports symmetric keys</li>
+        <li>Does not support key export</li>
+    </ul>
+</div>
 ---
