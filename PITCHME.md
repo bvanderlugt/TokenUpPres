@@ -1,35 +1,26 @@
 # TokenUp: JWT as a Service
 
-### Super Chill Tokens
+### Super Chill Tokens @fa[hand-peace-o]
 
 ---
 
 ## Agenda
 
 - Intro to JSON Web Tokens
-
 - Security cryptography refresh
-
 - Overview of cloudHSM and why we used KMS.
-
 - TokenUp architecture
-
 - Lessons learned
 
 ---
 
-## Motivation
+## Motivations
 
-- Impinj ramp up
-
-- Practical security experience
-
-- Flexing infrastructure muscle
-
-<!-- ---?code=src/go/server.go&lang=golang&title=Golang File -->
+- Create a single sign on service that can issue JWT tokens.
+- Learn about AWS key management services (CloudHSM and KMS).
+- Get practical experience with security principles.
 
 ---
-
 ## JWT (“jot”)
 
 > JSON web tokens are an open industry standard (RFC 7519) method for  representing claims securely between parties. - jwt.io
@@ -45,7 +36,6 @@ __Authentication:__ User logs in once and gets a token for subsequent requests. 
 __Information Exchange:__ Parties can use public/private key pairs to sign tokens. Provides message authenticity (confirm sender identity) and message integrity (message has not been tampered with).
 
 ---
-
 ## JWT example
 
 Header:
@@ -78,26 +68,18 @@ Token:
 [Header].[Payload].[Signature]
 
 ```
-
-
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
-
-
-
 ```
 
 ---
 
-### Security Overview
-
-<!-- TODO -->
+### Security Principles
 - Encryption
   - Implementations (ssl)
   - RSA public/private keys
 
 - Message authenticity and verification
   - hash functions vs. checksums, MAC/HMAC, keys
-
 ---
 
 ### cloudHSM overview
@@ -128,6 +110,7 @@ ___...so we used KMS instead___
 __Pros__
 - Easy to use (web api + sdk support)
 - Cheap as chips
+- Uses envelope encryption
 
 +++
 ### KMS (AWS Key Management Service)
@@ -138,9 +121,51 @@ __Cons:__
 
 
 ---
-## TokenUp architecture
+### TokenUp architecture
+
+- Boxy data flow thing there
+
+---
+### Demo time
+
+<!-- TODO
+- Show create tokens
+- Show using admin route
+- Show the token in jwt.io -->
 
 <!-- TODO fill me in checkout code rending: https://gitpitch.com/gitpitch/templates/aqua#/3 -->
 
 ---
-## Lessons learned
+### Example of signing
+
+```
+const jwa = require('jwa');
+
+const header = {
+  alg: 'HS256',
+  typ: 'JWT
+};
+
+const payload = {
+  exp: new Date(now.getTime() + 900000),
+  admin: true
+}
+
+const encodedHeader = base64url.encode(JSON.stringify(header));
+const encodedPayload = base64url.encode(JSON.stringify(payload));
+
+const leader = `${encodedHeader}.${encodedPayload}`;
+
+const algo = jwa(algorithm);
+const token = algo.sign(leader, 'SuperSecret');
+
+```
+
+---
+### Lessons learned
+
+- Envelope encryption and master key management are good ideas.
+- If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM.
+
+---
+### End
