@@ -3,22 +3,20 @@
 ### Super Chill Tokens @fa[hand-peace-o]
 
 ---
+## Motivations
+
+- Create a single sign on service that can issue JWT tokens
+- Learn about AWS key management infrastructure
+- Get practical experience with security principles
+---
 
 ## Agenda
 
 - Intro to JSON Web Tokens
 - Security cryptography refresh
-- Overview of cloudHSM and why we used KMS.
+- Overview of CloudHSM and why we used KMS
 - TokenUp architecture
 - Lessons learned
-
----
-
-## Motivations
-
-- Create a single sign on service that can issue JWT tokens.
-- Learn about AWS key management services (CloudHSM and KMS).
-- Get practical experience with security principles.
 
 ---
 ## JWT (“jot”)
@@ -72,17 +70,17 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 ```
 
 ---
-
 ### Security Principles
+
 - Encryption
   - Implementations (ssl)
   - RSA public/private keys
 
 - Message authenticity and verification
   - hash functions vs. checksums, MAC/HMAC, keys
----
 
-### cloudHSM overview
+---
+### CloudHSM overview
 
 Cloud-based hardware security module (HSM)
 
@@ -93,7 +91,7 @@ __Pros:__
 - Supports RSA pub/priv keys
 
 +++
-### cloudHSM overview
+### CloudHSM overview
 
 __Cons__:
 - Not easy to use
@@ -108,7 +106,7 @@ ___...so we used KMS instead___
 ### KMS (AWS Key Management Service)
 
 __Pros__
-- Easy to use (web api + sdk support)
+- Easy to use (Web API + SDK support)
 - Cheap as chips
 - Uses envelope encryption
 
@@ -123,7 +121,7 @@ __Cons:__
 ---
 ### TokenUp architecture
 
-- Boxy data flow thing there
+<!-- TODO Boxy data flow thing here -->
 
 ---
 ### Demo time
