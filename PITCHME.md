@@ -13,7 +13,7 @@
 ## Agenda
 
 - Intro to JSON Web Tokens
-- Security cryptography refresh
+- Cryptography things
 - Overview of CloudHSM and why we used KMS
 - TokenUp architecture
 - Lessons learned
@@ -70,16 +70,46 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 ```
 
 ---
-### Security Principles
+### Envelope Encryption
 
-- Encryption
-  - Implementations (ssl)
-  - RSA public/private keys
+> Encrypting a key with another key.
 
-- Message authenticity and verification
-  - hash functions vs. checksums, MAC/HMAC, keys
++++
+### Data Encryption Keys (DEK's)
+
+* Generate DEKs locally.
+* DEKs are encrypted at rest.
+* Store the DEK near the data that it encrypts.
+* Generate a new DEK every time you write the data. Don't need to rotate the DEKs.
+* Unique DEK per user.
+* Use a strong algorithm such as 256-bit Advanced Encryption Standard (AES) in Galois Counter Mode (GCM).
+
++++
+### Key Encryption Keys (KEK's)
+
+* Store centrally
+* Set the granularity of the DEKs they encrypt based on their use case.
+* Rotate keys regularly, and also after a suspected incident.
 
 ---
+
+### CloudHSM Overview
+
+* Create a cluster
+
+* Create 2-24 Hardware Security Modules (HSM) inside the cluster
+  * A cluster of HSM's work as a single logical unit
+  * Loadbalanced automatically
+
+* management layer
+  * Admins and crypto users
+
+* client
+ * key generation
+ * encryption and signing algorithm's
+
++++
+
 ### CloudHSM overview
 
 Cloud-based hardware security module (HSM)
@@ -88,7 +118,7 @@ __Pros:__
 - Secure hardware, destroys keys if tampered with. @fa[bomb] @fa[key]
 - __Does__ support key export @fa[check]
 - Supports SSL encryption offload via openssl dynamic engine
-- Supports RSA pub/priv keys
+- Supports RSA keys
 
 +++
 ### CloudHSM overview
@@ -100,38 +130,31 @@ __Cons__:
   - no automation for setup
 - Still Expensive (~ $30/day)
 
-___...so we used KMS instead___
-
 +++
+
+___...CloudHSM is a little heavy so we used KMS instead___
+
+---
 ### KMS (AWS Key Management Service)
 
 __Pros__
 - Easy to use (Web API + SDK support)
 - Cheap as chips
 - Uses envelope encryption
+- KMS automatically maps encrypted data to key
+- Governance handled by IAM infrastructure
 
 +++
 ### KMS (AWS Key Management Service)
 
 __Cons:__
-- Only supports symmetric keys
 - __Does not__ support key export @fa[times]
 
+---
+### TokenUp Intro
 
 ---
-### TokenUp architecture
-
-<!-- TODO Boxy data flow thing here -->
-
----
-### Demo time
-
-<!-- TODO
-- Show create tokens
-- Show using admin route
-- Show the token in jwt.io -->
-
-<!-- TODO fill me in checkout code rending: https://gitpitch.com/gitpitch/templates/aqua#/3 -->
+### Demo
 
 ---
 ### Example of signing
@@ -162,8 +185,12 @@ const token = algo.sign(leader, 'SuperSecret');
 ---
 ### Lessons learned
 
-- Envelope encryption and master key management are good ideas.
 - If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM.
 
 ---
 ### End
+
+[https://cloud.google.com/kms/docs/envelope-encryption](https://cloud.google.com/kms/docs/envelope-encryption)
+[https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
+[jwt.io](https://jwt.io/)
+[https://aws.amazon.com/kms/](https://aws.amazon.com/kms/)
