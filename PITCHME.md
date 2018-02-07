@@ -135,9 +135,9 @@ __Pros__
 __Cons:__
 - __Does not__ support key export (actually pro...)@fa[times]
 
-___
+---
 
-___...CloudHSM is cumbersome so we used KMS for TokenUp___
+__...CloudHSM is cumbersome so we used KMS for TokenUp__
 
 ---
 ### Envelope Encryption
@@ -168,6 +168,7 @@ ___...CloudHSM is cumbersome so we used KMS for TokenUp___
 
 ---
 ### Demo
+
 ---
 ### Lessons learned
 
