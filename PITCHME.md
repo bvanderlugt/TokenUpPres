@@ -92,7 +92,6 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 * Rotate keys regularly, and also after a suspected incident.
 
 ---
-
 ### CloudHSM Overview
 
 * Create a cluster
@@ -100,6 +99,10 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 * Create 2-24 Hardware Security Modules (HSM) inside the cluster
   * A cluster of HSM's work as a single logical unit
   * Loadbalanced automatically
+
+
++++
+### CloudHSM Overview
 
 * management layer
   * Admins and crypto users
