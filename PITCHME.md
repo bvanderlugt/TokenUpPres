@@ -85,7 +85,7 @@ HMACSHA256(
 ### CloudHSM Lifecycle
 * Create a cluster
 * Create 1-24 Hardware Security Modules (HSM) inside the cluster
-  * > 2 == HA and work as a single logical unit
+  * 2+ is HA and work as a single logical unit
   * Load balanced automatically
 * Install the CloudHSM client to connect to your HSM's
 
