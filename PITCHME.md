@@ -232,7 +232,7 @@ const token = algo.sign(leader, 'SuperSecret');
 
 ![](assets/kms-decrypt.png)
 
-___
+---
 
 ### Verify
 
