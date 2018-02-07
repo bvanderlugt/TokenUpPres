@@ -73,9 +73,9 @@ HMACSHA256(
 ### AWS Key Infrastructure offerings
 
 ---
-### CloudHSM Overview
+### What are Hardware Security Modules?
 
-<img src="https://i.pinimg.com/736x/fc/c2/05/fcc205990a8176bafd29d8b7a28ddb6c--archer-tv-show-archer-fx.jpg">
+<img src="https://s3-us-west-2.amazonaws.com/mediazoo/fcc205990a8176bafd29d8b7a28ddb6c--archer-tv-show-archer-fx.jpg">
 
 ---
 ### CloudHSM Lifecycle
@@ -140,7 +140,7 @@ __Cons:__
 
 > Encrypting a key with another key.
 
-<img src="https://www.blockandcompany.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/270029407_w_vaultkeyenvelope/Snap-Lock-Vault-Key-Envelopes-Red.jpg">
+<img src="https://s3-us-west-2.amazonaws.com/mediazoo/Snap-Lock-Vault-Key-Envelopes-Red.jpg">
 
 +++
 ### Data Encryption Keys (DEK's)
