@@ -109,10 +109,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
  * encryption and signing algorithm's
 
 +++
-
 ### CloudHSM overview
-
-Cloud-based hardware security module (HSM)
 
 __Pros:__
 - Secure hardware, destroys keys if tampered with. @fa[bomb] @fa[key]
@@ -157,7 +154,7 @@ __Cons:__
 ### Demo
 
 ---
-### Example of signing
+### Example of signing using JWA (JSON Web Algorithms)
 
 ```
 const jwa = require('jwa');
@@ -185,11 +182,13 @@ const token = algo.sign(leader, 'SuperSecret');
 ---
 ### Lessons learned
 
+- JWT's are a great alternative to session tracking.
 - If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM.
 
 ---
 ### End
 
+[Auth0 blog](https://auth0.com/blog/)
 [https://cloud.google.com/kms/docs/envelope-encryption](https://cloud.google.com/kms/docs/envelope-encryption)
 [https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
 [jwt.io](https://jwt.io/)
