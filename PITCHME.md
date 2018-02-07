@@ -37,11 +37,13 @@ __Information Exchange:__ Parties can use public/private key pairs to sign token
 ## JWT example
 Token:
 
-[Header].[Payload].[Signature]
+base64(header).base64(payload).signature
 
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
+Note:
+(~150 bytes)
 
 +++
 Header:
