@@ -164,34 +164,92 @@ Note:
 ---
 ### TokenUp Intro
 
----
-### Demo
+![architecture](assets/tokenup-diagram.jpg) 
 
+---
+
+### Post /token route
+
+Hit the service with username and password  
+
+![Postman](assets/postman-post.png)
+
+---
+### Authenticate via LDAP and return User
+
+![LDAP](assets/ldap-user.png)
+
+---
+### Generate and encrypt a new private key
+
+![](assets/kms-encrypt.png)
+
+---
+
+### Save for later retrieval
+
+![](assets/dynamo-save.png)
+
+---
+
+### Create Token Header and Payload
+![jwt.io](assets/header-payload.png)
+
+becomes: 
+```
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaXNwbGF5TmFtZSI6IkNoYXJsZXMgWGF2aWFyIiwiZW1haWwiOiJ4QHhtZW4uY29tIiwidXNlcm5hbWUiOiJ4IiwiYWRtaW4iOnRydWUsImV4cCI6IjIwMTgtMDItMDZUMjI6MTA6MjEuMTMzWiJ9`
+```
 ---
 ### Example of signing using JWA (JSON Web Algorithms)
 
 ```
 const jwa = require('jwa');
 
-const header = {
-  alg: 'HS256',
-  typ: 'JWT
-};
-
-const payload = {
-  exp: new Date(now.getTime() + 900000),
-  admin: true
-}
-
 const encodedHeader = base64url.encode(JSON.stringify(header));
 const encodedPayload = base64url.encode(JSON.stringify(payload));
 
 const leader = `${encodedHeader}.${encodedPayload}`;
 
-const algo = jwa(algorithm);
+const algo = jwa('HS256');
 const token = algo.sign(leader, 'SuperSecret');
 
 ```
+---
+
+### GET /token Route
+
+![Postman](assets/postman-get.png)
+
+---
+
+### Retrieve Encrypted User Key
+
+![](assets/dynamo-get.png)
+
+---
+
+### Decrypt the Key
+
+![](assets/kms-decrypt.png)
+
+___
+
+### Verify
+
+```
+const jwa = require('HS256');
+const algo = jwa(algorithm);
+return algo.verify(headerAndPayload, signature, 'SuperSecret');
+```
+
+- Will the signature decode?
+- Does the decoded signature match the header and payload?
+
+---
+### Demo
+
+---
+
 
 ---
 ### Lessons learned
