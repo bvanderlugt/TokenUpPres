@@ -72,6 +72,8 @@ HMACSHA256(
 ---
 ### AWS Key Infrastructure offerings
 
+##### CloudHSM and Key Management Service
+
 ---
 ### What are Hardware Security Modules?
 
@@ -80,9 +82,9 @@ HMACSHA256(
 ---
 ### CloudHSM Lifecycle
 * Create a cluster
-* Create 2-24 Hardware Security Modules (HSM) inside the cluster
-  * A cluster of HSM's work as a single logical unit
-  * Loadbalanced automatically
+* Create 1-24 Hardware Security Modules (HSM) inside the cluster
+  * > 2 == HA and work as a single logical unit
+  * Load balanced automatically
 * Install the CloudHSM client to connect to your HSM's
 
 +++
@@ -108,16 +110,12 @@ __Pros:__
 ### CloudHSM overview
 
 __Cons__:
-- Not easy to use
+- Not easy to develop with
   - Only a Java lib, OpenSSL, PCKS
-  - Lots of manual command line work
-  - No automation for setup
-  - Need a client to create a secure connection to the HSM (need to log in)
+- Lots of manual command line work
+- No automation for setup
+- Need a client to create a secure connection to the HSM (need to log in)
 - Still Expensive (~ $30/day)
-
-+++
-
-___...CloudHSM is cumbersome so we used KMS for TokenUp___
 
 ---
 ### KMS (AWS Key Management Service)
@@ -125,7 +123,7 @@ ___...CloudHSM is cumbersome so we used KMS for TokenUp___
 __Pros__
 - Easy to use (Web API + SDK support)
 - Cheap as chips
-- Uses envelope encryption
+- Subtlety enforces envelope encryption (4KB write max)
 - KMS automatically maps encrypted data to key
 - Governance handled by IAM infrastructure
 
@@ -134,6 +132,10 @@ __Pros__
 
 __Cons:__
 - __Does not__ support key export (actually pro...)@fa[times]
+
+___
+
+___...CloudHSM is cumbersome so we used KMS for TokenUp___
 
 ---
 ### Envelope Encryption
@@ -145,21 +147,19 @@ __Cons:__
 +++
 ### Data Encryption Keys (DEK's)
 
-Note:
-* Generate DEKs locally.
-* DEKs are encrypted at rest.
-* Store the DEK near the data that it encrypts.
-* Generate a new DEK every time you write the data. Don't need to rotate the DEKs.
+* Generate locally.
+* Encrypted at rest.
+* Store near the data.
+* Generate a new DEK every time you write.
 * Unique DEK per user.
-* Use a strong algorithm such as 256-bit Advanced Encryption Standard (AES) in Galois Counter Mode (GCM).
+* Use a strong algorithm (256-bit AES)
 
 +++
 ### Key Encryption Keys (KEK's)
 
-Note:
 * Store centrally
-* Set the granularity of the DEKs they encrypt based on their use case.
-* Rotate keys regularly, and also after a suspected incident.
+* Adjust DEK granularity based on their use case.
+* Rotate keys regularly (esp. after suspected incident) 😬
 
 ---
 ### TokenUp Intro
@@ -196,8 +196,8 @@ const token = algo.sign(leader, 'SuperSecret');
 ---
 ### Lessons learned
 
-- JWT's are a great alternative to session tracking.
-- If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM.
+- JWT's are a great alternative to session tracking for web apps, or use them as api keys
+- If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM
 
 ---
 ### End
