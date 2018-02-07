@@ -168,33 +168,6 @@ ___...CloudHSM is cumbersome so we used KMS for TokenUp___
 
 ---
 ### Demo
-
----
-### Example of signing using JWA (JSON Web Algorithms)
-
-```
-const jwa = require('jwa');
-
-const header = {
-  alg: 'HS256',
-  typ: 'JWT
-};
-
-const payload = {
-  exp: new Date(now.getTime() + 900000),
-  admin: true
-}
-
-const encodedHeader = base64url.encode(JSON.stringify(header));
-const encodedPayload = base64url.encode(JSON.stringify(payload));
-
-const leader = `${encodedHeader}.${encodedPayload}`;
-
-const algo = jwa(algorithm);
-const token = algo.sign(leader, 'SuperSecret');
-
-```
-
 ---
 ### Lessons learned
 
