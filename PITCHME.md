@@ -75,22 +75,25 @@ HMACSHA256(
 ---
 ### CloudHSM Overview
 
-* Create a cluster
+<img src="https://i.pinimg.com/736x/fc/c2/05/fcc205990a8176bafd29d8b7a28ddb6c--archer-tv-show-archer-fx.jpg">
 
+---
+### CloudHSM Lifecycle
+* Create a cluster
 * Create 2-24 Hardware Security Modules (HSM) inside the cluster
   * A cluster of HSM's work as a single logical unit
   * Loadbalanced automatically
-
+* Install the CloudHSM client to connect to your HSM's
 
 +++
 ### CloudHSM Overview
 
-* management layer
+* Management layer
   * Admins and crypto users
 
-* client
- * key generation
- * encryption and signing algorithm's
+* Client
+ * Key generation
+ * Encryption and signing algorithm's
 
 +++
 ### CloudHSM overview
@@ -99,21 +102,22 @@ __Pros:__
 - Secure hardware, destroys keys if tampered with. @fa[bomb] @fa[key]
 - __Does__ support key export @fa[check]
 - Supports SSL encryption offload via openssl dynamic engine
-- Supports RSA keys
+- Supports all the keys and algorithms
 
 +++
 ### CloudHSM overview
 
 __Cons__:
 - Not easy to use
-  - No web interface (so no sdk integration)
-  - lots of manual command line work
-  - no automation for setup
+  - Only a Java lib, OpenSSL, PCKS
+  - Lots of manual command line work
+  - No automation for setup
+  - Need a client to create a secure connection to the HSM (need to log in)
 - Still Expensive (~ $30/day)
 
 +++
 
-___...CloudHSM is cumbersome so we used KMS instead___
+___...CloudHSM is cumbersome so we used KMS for TokenUp___
 
 ---
 ### KMS (AWS Key Management Service)
@@ -129,17 +133,19 @@ __Pros__
 ### KMS (AWS Key Management Service)
 
 __Cons:__
-- __Does not__ support key export @fa[times]
+- __Does not__ support key export (actually pro...)@fa[times]
 
 ---
 ### Envelope Encryption
 
 > Encrypting a key with another key.
 
+<img src="https://www.blockandcompany.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/2/7/270029407_w_vaultkeyenvelope/Snap-Lock-Vault-Key-Envelopes-Red.jpg">
+
 +++
 ### Data Encryption Keys (DEK's)
 
-<!-- TODO make these comments  -->
+Note:
 * Generate DEKs locally.
 * DEKs are encrypted at rest.
 * Store the DEK near the data that it encrypts.
@@ -150,6 +156,7 @@ __Cons:__
 +++
 ### Key Encryption Keys (KEK's)
 
+Note:
 * Store centrally
 * Set the granularity of the DEKs they encrypt based on their use case.
 * Rotate keys regularly, and also after a suspected incident.
