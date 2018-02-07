@@ -132,7 +132,7 @@ __Cons__:
 
 +++
 
-___...CloudHSM is a little heavy so we used KMS instead___
+___...CloudHSM is cumbersome so we used KMS instead___
 
 ---
 ### KMS (AWS Key Management Service)
