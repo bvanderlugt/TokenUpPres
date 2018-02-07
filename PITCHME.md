@@ -5,7 +5,7 @@
 ---
 ## Motivations
 
-- Create a single sign on service that can issue JWT tokens
+- Create a single sign on service that can issue JWT
 - Learn about AWS key management infrastructure
 - Get practical experience with security principles
 ---
@@ -13,8 +13,8 @@
 ## Agenda
 
 - Intro to JSON Web Tokens
-- Cryptography things
 - Overview of CloudHSM and why we used KMS
+- Cryptography things
 - TokenUp architecture
 - Lessons learned
 
@@ -35,7 +35,15 @@ __Information Exchange:__ Parties can use public/private key pairs to sign token
 
 ---
 ## JWT example
+Token:
 
+[Header].[Payload].[Signature]
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```
+
++++
 Header:
 ```
 {
@@ -60,36 +68,9 @@ HMACSHA256(
   secret
 )
 ```
-+++
-Token:
-
-[Header].[Payload].[Signature]
-
-```
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
-```
 
 ---
-### Envelope Encryption
-
-> Encrypting a key with another key.
-
-+++
-### Data Encryption Keys (DEK's)
-
-* Generate DEKs locally.
-* DEKs are encrypted at rest.
-* Store the DEK near the data that it encrypts.
-* Generate a new DEK every time you write the data. Don't need to rotate the DEKs.
-* Unique DEK per user.
-* Use a strong algorithm such as 256-bit Advanced Encryption Standard (AES) in Galois Counter Mode (GCM).
-
-+++
-### Key Encryption Keys (KEK's)
-
-* Store centrally
-* Set the granularity of the DEKs they encrypt based on their use case.
-* Rotate keys regularly, and also after a suspected incident.
+### AWS Key Infrastructure offerings
 
 ---
 ### CloudHSM Overview
@@ -149,6 +130,29 @@ __Pros__
 
 __Cons:__
 - __Does not__ support key export @fa[times]
+
+---
+### Envelope Encryption
+
+> Encrypting a key with another key.
+
++++
+### Data Encryption Keys (DEK's)
+
+<!-- TODO make these comments  -->
+* Generate DEKs locally.
+* DEKs are encrypted at rest.
+* Store the DEK near the data that it encrypts.
+* Generate a new DEK every time you write the data. Don't need to rotate the DEKs.
+* Unique DEK per user.
+* Use a strong algorithm such as 256-bit Advanced Encryption Standard (AES) in Galois Counter Mode (GCM).
+
++++
+### Key Encryption Keys (KEK's)
+
+* Store centrally
+* Set the granularity of the DEKs they encrypt based on their use case.
+* Rotate keys regularly, and also after a suspected incident.
 
 ---
 ### TokenUp Intro
