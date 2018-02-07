@@ -202,10 +202,16 @@ const token = algo.sign(leader, 'SuperSecret');
 - If you need Key Management Infrastructure on AWS check out KMS first and only then use CloudHSM
 
 ---
-### End
+### 🎉  We're done 🎉
 
-[Auth0 blog](https://auth0.com/blog/)
-[https://cloud.google.com/kms/docs/envelope-encryption](https://cloud.google.com/kms/docs/envelope-encryption)
-[https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
-[jwt.io](https://jwt.io/)
-[https://aws.amazon.com/kms/](https://aws.amazon.com/kms/)
+Some hyperlinks for more details:
+
+[Auth0 blog has good info](https://auth0.com/blog/)
+
+[Google has great breakdown on envelope encryption](https://cloud.google.com/kms/docs/envelope-encryption)
+
+[da spec](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
+
+[jwt.io go here first](https://jwt.io/)
+
+[AWS KMS](https://aws.amazon.com/kms/)
