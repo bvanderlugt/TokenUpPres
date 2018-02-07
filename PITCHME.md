@@ -149,18 +149,18 @@ __...CloudHSM is cumbersome so we used KMS for TokenUp__
 +++
 ### Data Encryption Keys (DEK's)
 
-* Generate locally.
-* Encrypted at rest.
-* Store near the data.
-* Generate a new DEK every time you write.
-* Unique DEK per user.
-* Use a strong algorithm (256-bit AES)
+* Generate locally
+* Encrypted at rest
+* Store near the data
+* Generate a new one every time you write
+* Unique to user
+* Generate with a strong algorithm (256-bit AES)
 
 +++
 ### Key Encryption Keys (KEK's)
 
 * Store centrally
-* Adjust DEK granularity based on their use case.
+* Adjust DEK granularity based on their use case
 * Rotate keys regularly (esp. after suspected incident) 😬
 
 ---
